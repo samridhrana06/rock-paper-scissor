@@ -8,36 +8,83 @@
 <body>
     <!-- Your content goes here -->
     <h1>Hello, the game is in the console</h1>
+        <button id="rock">Rock</button>
+        <button id="paper">Paper</button>
+        <button id="scissor">Scissor</button>
 
+        <div id="resultDisplay"></div>
+        
     <script>
         let humanScore = 0;
         let computerScore = 0;
 
-        function playGame() {
-            for (let i = 0; i < 5; i++) {
-                const humanChoice = getHumanChoice(prompt("Enter Rock, Paper or Scissor:").toLowerCase());
-                const computerChoice = getComputerChoice(Math.floor(Math.random() * 3));
-                playRound(humanChoice, computerChoice);
-            }
-            console.log(`Final Scores - Human: ${humanScore}, Computer: ${computerScore}`);
-        }
+        // function playGame() {
+        //     for (let i = 0; i < 5; i++) {
+        //         const humanChoice = getHumanChoice(prompt("Enter Rock, Paper or Scissor:").toLowerCase());
+        //         const computerChoice = getComputerChoice(Math.floor(Math.random() * 3));
+        //         playRound(humanChoice, computerChoice);
+        //     }
+        //     console.log(`Final Scores - Human: ${humanScore}, Computer: ${computerScore}`);
+        // }
+        const rock = document.getElementById("rock");
+        const paper = document.getElementById("paper");
+        const scissor = document.getElementById("scissor");
+        // const resultDiv = document.createElement("div");
+        // resultDiv.id="resultDisplay";
+
+        // resultDiv.textContent="Resul will be displayed here";
+
+
+        rock.addEventListener("click",()=>{
+        console.log("Rock is clicked");
+        playRound("rock",getComputerChoice(Math.floor(Math.random()*3)))
+        });
+        paper.addEventListener("click",()=>{
+        console.log("paper is clicked");
+        playRound("paper",getComputerChoice(Math.floor(Math.random()*3)))
+        });
+        scissor.addEventListener("click",()=>{
+        console.log("scissor is clicked");
+        playRound("scissor",getComputerChoice(Math.floor(Math.random()*3)))
+        });
+    
+
+        // console.log(`Final Scores - Human: ${humanScore}, Computer: ${computerScore}`);
 
         function playRound(humanChoice, computerChoice) {
-            console.log(`Human: ${humanChoice}, Computer: ${computerChoice}`);
+            // console.log(`Human: ${humanChoice}, Computer: ${computerChoice}`);
+            let result = "";
+        const resultDisplay = document.getElementById("resultDisplay");
+
             if (humanChoice === computerChoice) {
-                console.log("It's a tie!");
+                // console.log("It's a tie!");
+                result = "It's a tie!";
+
             } else if (
                 (humanChoice === "rock" && computerChoice === "scissor") ||
                 (humanChoice === "paper" && computerChoice === "rock") ||
                 (humanChoice === "scissor" && computerChoice === "paper")
             ) {
-                console.log(`You win! ${humanChoice} beats ${computerChoice}`);
+                // console.log(`You win! ${humanChoice} beats ${computerChoice}`);
+                result = `You win! ${humanChoice} beats ${computerChoice}`;
+
                 humanScore += 1;
             } else {
-                console.log(`You lose! ${computerChoice} beats ${humanChoice}`);
+                // console.log(`You lose! ${computerChoice} beats ${humanChoice}`);
+                result = `You lose! ${computerChoice} beats ${humanChoice}`;
+
                 computerScore += 1;
             }
+            resultDisplay.textContent=result;
+
+            if (humanScore === 5 || computerScore === 5) {
+        if (humanScore === 5) {
+            resultDisplay.textContent += "\nCongratulations! You win the game!";
+        } else {
+            resultDisplay.textContent += "\nComputer wins the game!";
         }
+        }
+    }
 
         function getComputerChoice(value) {
             if (value === 0) {
